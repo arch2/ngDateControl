@@ -505,7 +505,7 @@
       </svg>
     </a>
   </div>
-
+  
   <!-- Footer -->
   <footer>
       Love Angular?&nbsp;
@@ -534,4 +534,27 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
+
+<!-- form-->
+<form [formGroup]="form">
+  <label>
+    Text:
+    <input type="text" formControlName="textInput">
+  </label>
+  <label>
+    Date Input One:
+    <input type="datetime-local" formControlName="dateInputOne">
+  </label>
+  <label>
+    Date Input Two:
+    <input type="datetime-local" formControlName="dateInputTwo">
+  </label>
+  <label>
+    Date Input Three:
+    <input type="datetime-local" formControlName="dateInputThree">
+  </label>
+</form>
+<div>
+  FormValue: {{form.getRawValue() | json}}
+</div>
 
