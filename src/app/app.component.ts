@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   form: FormGroup;
   title = 'app';
+  selectedDate: Date = new Date("01/01/01");
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       textInput: this.fb.control("prefill"),

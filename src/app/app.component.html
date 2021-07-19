@@ -553,6 +553,12 @@
     Date Input Three:
     <input type="datetime-local" formControlName="dateInputThree">
   </label>
+  <input 
+  type="text" 
+  mwlFlatpickr 
+  [(ngModel)]="selectedDate" 
+  [altInput]="true" 
+  [convertModelValue]="true">
 </form>
 <div>
   FormValue: {{form.getRawValue() | json}}
