@@ -18,8 +18,8 @@ const providers = [
   styleUrls: ['./date-control.component.scss'],
   providers: [providers]
 })
-export class DateControlComponent implements OnInit, ControlValueAccessor  {
-  value:any;
+export class DateControlComponent implements OnInit, ControlValueAccessor {
+  value: any;
   disabled = false;
 
   @Input() public options: { key; value }[];
@@ -27,7 +27,7 @@ export class DateControlComponent implements OnInit, ControlValueAccessor  {
   onChange: any;
   onTouched: any;
 
-  constructor() {}
+  constructor() { }
 
   validate() {
     const isNotValid = this.value;
@@ -37,10 +37,11 @@ export class DateControlComponent implements OnInit, ControlValueAccessor  {
       }
     );
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   evaluate(event): void {
-    this.value = event;
+    //this.value = event;
+    //  console.log('value', this.value);
     this.onChange(this.value);
     this.onTouched();
   }
