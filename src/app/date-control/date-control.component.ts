@@ -1,52 +1,59 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+const providers = [
+  {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DateControlComponent),
+    multi: true
+  },
+  {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => DateControlComponent),
+    multi: true
+  }
+];
 @Component({
   selector: 'app-date-control',
   templateUrl: './date-control.component.html',
   styleUrls: ['./date-control.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => DateControlComponent),
-    multi: true
-  }]
+  providers: [providers]
 })
-export class DateControlComponent implements ControlValueAccessor, OnInit {
-  private _value = null;
-  private onChangeCallback: any;
+export class DateControlComponent implements OnInit, ControlValueAccessor  {
+  value:any;
+  disabled = false;
 
-  @ViewChild('input', { static: true })
-  inputRef: ElementRef;
-  @Input()
-  get value(): Date { return this._value; }
-  set value(value: Date) {
-    this._value = value && typeof value === 'string' ? new Date(value) : new Date(null);
+  @Input() public options: { key; value }[];
+
+  onChange: any;
+  onTouched: any;
+
+  constructor() {}
+
+  validate() {
+    const isNotValid = this.value;
+    return (
+      isNotValid && {
+        invalid: true
+      }
+    );
   }
-  @Output()
-  valueChange = new EventEmitter<Date>();
+  ngOnInit(): void {}
 
-  ngOnInit() {
-    const inputElement = <HTMLInputElement>this.inputRef.nativeElement;
-    inputElement.onchange = () => this.onChange();
-    inputElement.onkeyup = () => this.onChange();
+  evaluate(event): void {
+    this.value = event;
+    this.onChange(this.value);
+    this.onTouched();
   }
-
-  writeValue(obj: any): void {
-    if (obj !== this._value) {
-      this._value = obj;
-    }
+  writeValue(value: any): void {
+    this.value = value;
   }
   registerOnChange(fn: any): void {
-    this.onChangeCallback = fn;
+    this.onChange = fn;
   }
-  registerOnTouched(fn: any): void { }
-  setDisabledState?(isDisabled: boolean): void { }
-  // change events from the textarea
-  private onChange() {
-    const input = <HTMLInputElement>this.inputRef.nativeElement;
-    // get value from text area
-    const newValue = input.value;
-
-    // update the form
-    this.onChangeCallback(newValue);
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

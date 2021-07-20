@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app';
   someText: string = "Hello World";
+  someText2: string = "Hello World 2";
   selectedDate: Date = new Date("01/01/02");
 }

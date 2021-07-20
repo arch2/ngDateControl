@@ -1,2 +1,7 @@
 <p>date-control works!</p>
 <p>{{_value}}</p>
+
+<label>
+    Date Control wrapper:
+    <input id="date-input" type="text" [(ngModel)]="_value" (change)="evaluate($event)">
+</label>
