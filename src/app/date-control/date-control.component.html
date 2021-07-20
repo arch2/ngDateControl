@@ -1,7 +1,8 @@
 <p>date-control works!</p>
 <p>{{value}}</p>
-
-<label>
-    Date Control wrapper:
-    <input id="date-input" type="text" [(ngModel)]="value" (change)="evaluate($event)">
-</label>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div>
+    <label> Date Control wrapper: </label>
+    <input #inputField type="text" [(ngModel)]="value" (keyup)="evaluate($event)">
+    <i class="fa fa-book" (click)="openCalendar()"></i>
+</div>
