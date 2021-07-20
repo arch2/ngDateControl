@@ -536,7 +536,7 @@
 
 
 <!-- form-->
-<form [formGroup]="form">
+<!-- <form [formGroup]="form">
   <label>
     Text:
     <input type="text" formControlName="textInput">
@@ -553,14 +553,30 @@
     Date Input Three:
     <input type="datetime-local" formControlName="dateInputThree">
   </label>
-  <input 
+  <input
+        type="text"
+        formControlName="dateInputThree"
+        mwlFlatpickr
+        [altFormat]="altFormat"
+        [altInput]="altInput"
+        [mode]="mode"
+        [locale]="'en'"
+        [convertModelValue]="convertModelValue">
+</form> -->
+<input 
   type="text" 
   mwlFlatpickr 
   [(ngModel)]="selectedDate" 
   [altInput]="true" 
   [convertModelValue]="true">
-</form>
-<div>
-  FormValue: {{form.getRawValue() | json}}
-</div>
 
+  <label>
+    Text:
+    <input type="text" [(ngModel)]="someText">
+  </label>
+<br/>
+  <div>
+    values:
+    {{selectedDate}}
+    --- {{someText}}
+  </div>

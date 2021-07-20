@@ -1,18 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import 'flatpickr/dist/flatpickr.css'; // you may need to adjust the css import depending on your build tool
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { DateControlComponent } from './date-control/date-control.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DateControlComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     FlatpickrModule.forRoot()
   ],
   providers: [],
