@@ -3,11 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div>
-    <label>DatePicker</label>
-    <input #hiddenDatePicker type="text" mwlFlatpickr [(ngModel)]="internalDate" (change)="updateInput($event)" [altInput]="true" [convertModelValue]="true">
-</div>
-<div>
     <label> Date Control wrapper: </label>
-    <input #inputField type="text" [(ngModel)]="value" (keyup)="evaluate($event)">
+    <input #inputField type="text" [(ngModel)]="value" (keyup)="evaluate(value)">
     <i #icon class="fa fa-book" (click)="openCalendar()"></i>
 </div>

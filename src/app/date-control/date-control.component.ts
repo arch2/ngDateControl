@@ -25,7 +25,6 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
   value: any;
   disabled = false;
   internalDate: any;
-  private currentValue: BehaviorSubject<any>;
 
   @Input() public options: { key; value }[];
   @ViewChild("inputField", { static: true }) inputField: ElementRef;
@@ -35,14 +34,7 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
   onChange: any;
   onTouched: any;
 
-  constructor() {
-    this.currentValue = new BehaviorSubject<any>(this.value);
-    this.currentValue.pipe(tap(x => {
-      console.log('observable fired', x);
-      this.value = x;
-      console.log('what is value',this.value);
-    })).subscribe();
-  }
+  constructor() {  }
 
   validate() {
     const isNotValid = this.value;
@@ -55,8 +47,7 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
   ngOnInit(): void { }
 
   evaluate(event): void {
-    //this.value = event;
-    //  console.log('value', this.value);
+    this.value = event;
     this.onChange(this.value);
     this.onTouched();
   }
@@ -73,7 +64,6 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
   openCalendar(): void {
-    console.log("calendar event fired");
     // const options: any = {
     //   altFormat: this.altFormat,
     //   altInput: this.altInput,
@@ -161,26 +151,12 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
     //     });
     //   }
     // };
-    // this.value = this.value ? new Date(this.value) : new Date();
-    // flatpickr(this.inputField.nativeElement,null)
     const instance = flatpickr(this.iconElement.nativeElement, null) as flatpickr.Instance;
+    
     instance.open();
     instance.config.onChange.push(this.DateSelectedEvent.bind(this))
-    // instance._debouncedChange.pipe(
-    //   map(x=>{console.log('value?',x)})
-    // ).sub
-    // instance.selectedDates
-
-    // this.hiddenDatePicker.nativeElement.click();
-    // console.log('click happened?');
-
   }
   DateSelectedEvent(selectedDates, dateStr, instance) {
-    console.log('onchange fired', selectedDates, dateStr);
-    // this.value = "test2"//selectedDates[0];
-    this.currentValue.next(dateStr);
-  }
-  updateInput($event) {
-    this.value = $event ? new Date($event) : new Date();
+    this.evaluate(dateStr);
   }
 }
