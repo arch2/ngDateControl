@@ -64,97 +64,97 @@ export class DateControlComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
   openCalendar(): void {
-    // const options: any = {
-    //   altFormat: this.altFormat,
-    //   altInput: this.altInput,
-    //   altInputClass: this.altInputClass,
-    //   allowInput: this.allowInput,
-    //   appendTo: this.appendTo,
-    //   ariaDateFormat: this.ariaDateFormat,
-    //   clickOpens: this.clickOpens,
-    //   dateFormat: this.dateFormat,
-    //   defaultHour: this.defaultHour,
-    //   defaultMinute: this.defaultMinute,
-    //   defaultSeconds: this.defaultSeconds,
-    //   disable: this.disable,
-    //   disableMobile: this.disableMobile,
-    //   enable: this.enable,
-    //   enableTime: this.enableTime,
-    //   enableSeconds: this.enableSeconds,
-    //   formatDate: this.formatDate,
-    //   hourIncrement: this.hourIncrement,
-    //   defaultDate: this.initialValue,
-    //   inline: this.inline,
-    //   maxDate: this.maxDate,
-    //   minDate: this.minDate,
-    //   minuteIncrement: this.minuteIncrement,
-    //   mode: this.mode,
-    //   nextArrow: this.nextArrow,
-    //   noCalendar: this.noCalendar,
-    //   now: this.now,
-    //   parseDate: this.parseDate,
-    //   prevArrow: this.prevArrow,
-    //   shorthandCurrentMonth: this.shorthandCurrentMonth,
-    //   showMonths: this.showMonths,
-    //   monthSelectorType: this.monthSelectorType,
-    //   static: this.static,
-    //   time24hr: this.time24hr,
-    //   weekNumbers: this.weekNumbers,
-    //   getWeek: this.getWeek,
-    //   wrap: this.wrap,
-    //   plugins: this.plugins,
-    //   locale: this.locale,
-    //   onChange: (selectedDates: Date[], dateString: string, instance: any) => {
-    //     this.flatpickrChange.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onOpen: (selectedDates: Date[], dateString: string, instance: any) => {
-    //     this.flatpickrOpen.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onClose: (selectedDates: Date[], dateString: string, instance: any) => {
-    //     this.flatpickrClose.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onMonthChange: (
-    //     selectedDates: Date[],
-    //     dateString: string,
-    //     instance: any
-    //   ) => {
-    //     this.flatpickrMonthChange.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onYearChange: (
-    //     selectedDates: Date[],
-    //     dateString: string,
-    //     instance: any
-    //   ) => {
-    //     this.flatpickrYearChange.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onReady: (selectedDates: Date[], dateString: string, instance: any) => {
-    //     this.flatpickrReady.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onValueUpdate: (
-    //     selectedDates: Date[],
-    //     dateString: string,
-    //     instance: any
-    //   ) => {
-    //     this.flatpickrValueUpdate.emit({ selectedDates, dateString, instance });
-    //   },
-    //   onDayCreate: (
-    //     selectedDates: Date[],
-    //     dateString: string,
-    //     instance: any,
-    //     dayElement: HTMLElement
-    //   ) => {
-    //     this.flatpickrDayCreate.emit({
-    //       selectedDates,
-    //       dateString,
-    //       instance,
-    //       dayElement
-    //     });
-    //   }
-    // };
-    const instance = flatpickr(this.iconElement.nativeElement, null) as flatpickr.Instance;
-    
+    const options: any = {
+      // altFormat: this.altFormat,
+      // altInput: this.altInput,
+      // altInputClass: this.altInputClass,
+      // allowInput: this.allowInput,
+      // appendTo: this.appendTo,
+      // ariaDateFormat: this.ariaDateFormat,
+      // clickOpens: this.clickOpens,
+      // dateFormat: this.dateFormat,
+      // defaultHour: this.defaultHour,
+      // defaultMinute: this.defaultMinute,
+      // defaultSeconds: this.defaultSeconds,
+      // disable: this.disable,
+      // disableMobile: this.disableMobile,
+      // enable: this.enable,
+      // enableTime: this.enableTime,
+      // enableSeconds: this.enableSeconds,
+      // formatDate: this.formatDate,
+      // hourIncrement: this.hourIncrement,
+      // defaultDate: this.initialValue,
+      // inline: this.inline,
+      // maxDate: this.maxDate,
+      // minDate: this.minDate,
+      // minuteIncrement: this.minuteIncrement,
+      // mode: this.mode,
+      // nextArrow: this.nextArrow,
+      // noCalendar: this.noCalendar,
+      // now: this.now,
+      // parseDate: this.parseDate,
+      // prevArrow: this.prevArrow,
+      // shorthandCurrentMonth: this.shorthandCurrentMonth,
+      // showMonths: this.showMonths,
+      // monthSelectorType: this.monthSelectorType,
+      // static: this.static,
+      // time24hr: this.time24hr,
+      // weekNumbers: this.weekNumbers,
+      // getWeek: this.getWeek,
+      // wrap: this.wrap,
+      // plugins: this.plugins,
+      // locale: this.locale,
+      onChange: (selectedDates: Date[], dateString: string, instance: any) => {
+        // this.flatpickrChange.emit({ selectedDates, dateString, instance });
+        this.DateSelectedEvent(selectedDates,dateString,instance);
+      },
+      // onOpen: (selectedDates: Date[], dateString: string, instance: any) => {
+      //   this.flatpickrOpen.emit({ selectedDates, dateString, instance });
+      // },
+      // onClose: (selectedDates: Date[], dateString: string, instance: any) => {
+      //   this.flatpickrClose.emit({ selectedDates, dateString, instance });
+      // },
+      // onMonthChange: (
+      //   selectedDates: Date[],
+      //   dateString: string,
+      //   instance: any
+      // ) => {
+      //   this.flatpickrMonthChange.emit({ selectedDates, dateString, instance });
+      // },
+      // onYearChange: (
+      //   selectedDates: Date[],
+      //   dateString: string,
+      //   instance: any
+      // ) => {
+      //   this.flatpickrYearChange.emit({ selectedDates, dateString, instance });
+      // },
+      // onReady: (selectedDates: Date[], dateString: string, instance: any) => {
+      //   this.flatpickrReady.emit({ selectedDates, dateString, instance });
+      // },
+      // onValueUpdate: (
+      //   selectedDates: Date[],
+      //   dateString: string,
+      //   instance: any
+      // ) => {
+      //   this.flatpickrValueUpdate.emit({ selectedDates, dateString, instance });
+      // },
+      // onDayCreate: (
+      //   selectedDates: Date[],
+      //   dateString: string,
+      //   instance: any,
+      //   dayElement: HTMLElement
+      // ) => {
+      //   this.flatpickrDayCreate.emit({
+      //     selectedDates,
+      //     dateString,
+      //     instance,
+      //     dayElement
+      //   });
+      // }
+    };
+    const instance = flatpickr(this.iconElement.nativeElement, options) as flatpickr.Instance;    
     instance.open();
-    instance.config.onChange.push(this.DateSelectedEvent.bind(this))
+    // instance.config.onChange.push(this.DateSelectedEvent.bind(this))
   }
   DateSelectedEvent(selectedDates, dateStr, instance) {
     this.evaluate(dateStr);

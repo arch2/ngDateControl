@@ -576,7 +576,8 @@
 <form #demo="ngForm">
   <div>
     <label>DatePicker</label>
-    <input type="text" mwlFlatpickr name="selectedDate" [(ngModel)]="selectedDate" [altInput]="true" [convertModelValue]="true">
+    <!-- <input type="text" mwlFlatpickr name="selectedDate" [(ngModel)]="selectedDate" [altInput]="true" [convertModelValue]="true"> -->
+    <app-date-control name="selectedDate" [(ngModel)]="selectedDate" ></app-date-control>
   </div>
   <div>
     <label>Text:</label>
