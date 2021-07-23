@@ -1,52 +1,37 @@
-<!-- form-->
-<!-- <form [formGroup]="form">
-  <label>
-    Text:
-    <input type="text" formControlName="textInput">
-  </label>
-  <label>
-    Date Input One:
-    <input type="datetime-local" formControlName="dateInputOne">
-  </label>
-  <label>
-    Date Input Two:
-    <input type="datetime-local" formControlName="dateInputTwo">
-  </label>
-  <label>
-    Date Input Three:
-    <input type="datetime-local" formControlName="dateInputThree">
-  </label>
-  <input
-        type="text"
-        formControlName="dateInputThree"
-        mwlFlatpickr
-        [altFormat]="altFormat"
-        [altInput]="altInput"
-        [mode]="mode"
-        [locale]="'en'"
-        [convertModelValue]="convertModelValue">
-</form> -->
-<form #demo="ngForm">
-  <div>
-    <label>DatePicker</label>
-    <!-- <input type="text" mwlFlatpickr name="selectedDate" [(ngModel)]="selectedDate" [altInput]="true" [convertModelValue]="true"> -->
-    <app-date-control name="selectedDate" [(ngModel)]="selectedDate" ></app-date-control>
-  </div>
-  <div>
-    <label>Text:</label>
-    <input type="text" name="someText" [(ngModel)]="someText">
-  </div>
-  <br />
-  <div>
-    <label>Date Component</label>
-    <app-date-control name="someText2" [(ngModel)]="someText2" ></app-date-control>
-  </div>
-</form>
-<div>
-  form value {{demo.value | json}}
+<div class="split-screen">
+  <p>form Value {{form.getRawValue() | json}}</p>
+  <p> form value {{demo.value | json}} </p>
 </div>
-<!-- <div>
-  values:
-  {{selectedDate}}
-  --- {{someText}}
-</div> -->
+<div class="split-screen">
+  <form [formGroup]="form">
+    <label>
+      Text:
+      <input type="text" formControlName="TF">
+    </label>
+    <label>
+      Date Required:
+      <input type="text" formControlName="DateRequired">
+    </label>
+    <label>
+      Date Not Required:
+      <input type="text" formControlName="DateNR">
+    </label>
+    <app-date-form-control></app-date-form-control>
+  </form>
+  <form #demo="ngForm">
+    <div>
+      <label>DatePicker</label>
+      <!-- <input type="text" mwlFlatpickr name="selectedDate" [(ngModel)]="selectedDate" [altInput]="true" [convertModelValue]="true"> -->
+      <app-date-control name="selectedDate" [(ngModel)]="selectedDate"></app-date-control>
+    </div>
+    <div>
+      <label>Text:</label>
+      <input type="text" name="someText" [(ngModel)]="someText">
+    </div>
+    <br />
+    <div>
+      <label>Date Component</label>
+      <app-date-control name="someText2" [(ngModel)]="someText2"></app-date-control>
+    </div>
+  </form>
+</div>
