@@ -1,2 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'flatpickr/dist/flatpickr.css'; // you may need to adjust the css import depending on your build tool
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
+i {
+    width: 2px !important;
+    position: relative;
+    right: 30px;
+    font-size: 20px;
+    line-height: 40px;
+    cursor: pointer;
+    z-index: 1;
+    color: #03045fc7;
+}
+input {
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    height: 25px;
+    padding: 5px;
+    width: 420px;
+}
+.split-screen {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: stretch;
+    align-content: stretch;
+    > * {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+    }
+}

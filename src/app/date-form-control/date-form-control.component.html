@@ -1,1 +1,6 @@
-<p>date-form-control works!</p>
+<p>date-form-control works! internal value {{formGroup.getRawValue() | json }}</p>
+<div [formGroup]="formGroup">
+    <label> Date Form Control wrapper: </label>
+    <input type="text" formControlName="date">
+    <i #icon class="fa fa-book" (click)="openCalendar()"></i>
+</div>
