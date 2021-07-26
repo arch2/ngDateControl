@@ -1,14 +1,19 @@
 import { Component, ElementRef, forwardRef, Input, OnDestroy, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import flatpickr from 'flatpickr';
-import { merge } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, merge, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 
 const providers = [
   {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => DateFormControlComponent),
     multi: true
+  },
+  {
+    provide: NG_VALIDATORS,
+    multi: true,
+    useExisting: forwardRef(() => DateFormControlComponent),
   }
 ]
 @Component({
@@ -22,23 +27,35 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
   @ViewChild("icon", { static: true }) iconElement: ElementRef;
   @Input() minDate: Date;
   @Input() maxDate: Date;
-  formGroup: FormGroup;
+  @Input() placeHolder:string = "mm/dd/yyyy"
+  internalFormControl: FormControl;
+  externalFormControl: FormControl;
+  Unsubscribe: Subject<null>;
 
   onChange: any = () => { };
   onTouched: any = () => { };
   constructor(private fb: FormBuilder) {
-    this.formGroup = this.fb.group({
-      date: this.fb.control(null)
-    })
+    this.Unsubscribe = new Subject();
+    this.internalFormControl = this.fb.control(null);
+    this.externalFormControl = this.fb.control(null);
     merge(
-      this.formGroup.valueChanges,
-      this.formGroup.statusChanges
+      this.internalFormControl.valueChanges,
+      this.internalFormControl.statusChanges
     ).pipe(
-      tap(x => { this.onChange(this.formGroup.value) })
+      tap(x => {
+        const val = this.internalFormControl.value;
+        const newDate = val ? new Date(val) : new Date(null);
+        this.externalFormControl.setValue(newDate);
+      }),
+      takeUntil(this.Unsubscribe)
     ).subscribe();
+    this.externalFormControl.valueChanges.pipe(
+      tap(x => { this.onChange(x) }),
+      takeUntil(this.Unsubscribe)
+    ).subscribe()
   }
   writeValue(obj: any): void {
-    this.formGroup.get('date').setValue(obj);
+    this.internalFormControl.setValue(obj);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn
@@ -48,17 +65,18 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
   }
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    const control = this.formGroup.get('date') as FormControl;
-    isDisabled ? control.disable() : control.enable();
+    isDisabled ? this.internalFormControl.disable() : this.internalFormControl.enable();
   }
   validate(control: AbstractControl): ValidationErrors {
-    return this.formGroup.valid ? null : this.formGroup.errors;
+    this.internalFormControl.setValidators(control.validator)
+    return control.valid ? null : control.errors;
   }
   registerOnValidatorChange?(fn: () => void): void {
     this.onChange = fn;
   }
   ngOnDestroy(): void {
-
+    this.Unsubscribe.next();
+    this.Unsubscribe.complete();
   }
   openCalendar(): void {
     const options: any = {
@@ -82,8 +100,8 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       // hourIncrement: this.hourIncrement,
       // defaultDate: this.initialValue,
       // inline: this.inline,
-      // maxDate: this.maxDate,
-      // minDate: this.minDate,
+      maxDate: this.maxDate,
+      minDate: this.minDate,
       // minuteIncrement: this.minuteIncrement,
       // mode: this.mode,
       // nextArrow: this.nextArrow,
@@ -104,7 +122,7 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       onChange: (selectedDates: Date[], dateString: string, instance: any) => {
         // this.flatpickrChange.emit({ selectedDates, dateString, instance });
         //this.DateSelectedEvent(selectedDates,dateString,instance);
-        this.formGroup.get('date').setValue(dateString);
+        this.internalFormControl.setValue(dateString);
       },
       // onOpen: (selectedDates: Date[], dateString: string, instance: any) => {
       //   this.flatpickrOpen.emit({ selectedDates, dateString, instance });

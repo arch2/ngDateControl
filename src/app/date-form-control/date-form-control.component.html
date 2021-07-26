@@ -1,6 +1,7 @@
-<p>date-form-control works! internal value {{formGroup.getRawValue() | json }}</p>
-<div [formGroup]="formGroup">
+<p>date-form-control works! internal value {{internalFormControl.value }}</p>
+<div [ngClass]="{'has-error':internalFormControl.errors !=null}">
     <label> Date Form Control wrapper: </label>
-    <input type="text" formControlName="date">
-    <i #icon class="fa fa-book" (click)="openCalendar()"></i>
+    <input type="text" [placeholder]="placeHolder" [formControl]="internalFormControl">
+    <i [ngClass]="{'hidden':disabled ==true}" #icon class="fa fa-book" (click)="openCalendar()"></i>
+    <div *ngIf="internalFormControl.invalid">There is some error</div>
 </div>

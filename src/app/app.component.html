@@ -1,9 +1,13 @@
 <div class="split-screen">
-  <p>form Value {{form.getRawValue() | json}}</p>
+  <div>
+    <p>form Value {{form.getRawValue() | json}}</p>
+    <p *ngFor="let err of getFormValidationErrors(form)">error: {{err}}</p>
+  </div>
   <p> form value {{demo.value | json}} </p>
 </div>
 <div class="split-screen">
   <form [formGroup]="form">
+    <h1>Reactive Form</h1>
     <label>
       Text:
       <input type="text" formControlName="TF">
@@ -16,9 +20,10 @@
       Date Not Required:
       <input type="text" formControlName="DateNR">
     </label>
-    <app-date-form-control formControlName="DateNR"></app-date-form-control>
+    <app-date-form-control formControlName="DateRequired" placeHolder="hello world" [minDate]="minDate" [maxDate]="maxDate"></app-date-form-control>
   </form>
   <form #demo="ngForm">
+    <h1>Two way binding form</h1>
     <div>
       <label>DatePicker</label>
       <!-- <input type="text" mwlFlatpickr name="selectedDate" [(ngModel)]="selectedDate" [altInput]="true" [convertModelValue]="true"> -->
