@@ -8,6 +8,7 @@
 <div class="split-screen">
   <form [formGroup]="form">
     <h1>Reactive Form</h1>
+    <button (click)="disableFC()">disable something</button>
     <label>
       Text:
       <input type="text" formControlName="TF">
@@ -23,7 +24,6 @@
     </label>
     <app-date-form-control formControlName="DateRequired" placeHolder="hello world" [minDate]="DateNRValue" [maxDate]="DateEnd"></app-date-form-control>
     <app-date-form-control formControlName="DateEnd" placeHolder="date end?"></app-date-form-control>
-    
   </form>
   <form #demo="ngForm">
     <h1>Two way binding form</h1>

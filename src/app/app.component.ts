@@ -41,4 +41,8 @@ export class AppComponent {
   get DateEnd() {
     return this.form.get('DateEnd').value;
   }
+  disableFC() {
+    const control = this.form.get('DateRequired');
+    control.enabled ? control.disable() : control.enable();
+  }
 }
