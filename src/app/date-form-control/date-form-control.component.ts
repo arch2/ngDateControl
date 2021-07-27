@@ -84,7 +84,7 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
   openCalendar(): void {
     this.calendarPicker.config.minDate = this.minDate;
     this.calendarPicker.config.maxDate = this.maxDate;
-    this.calendarPicker.setDate(new Date(this.externalFormControl.value))
+    this.calendarPicker.setDate(this.externalFormControl.value)
     setTimeout(() => {
       this.calendarPicker.open();
     }, 100);
