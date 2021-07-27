@@ -1,8 +1,8 @@
-import { Component, ElementRef, forwardRef, Input, OnDestroy, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import flatpickr from 'flatpickr';
-import { BehaviorSubject, merge, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 
 const providers = [
   {
@@ -22,15 +22,17 @@ const providers = [
   styleUrls: ['./date-form-control.component.scss'],
   providers: providers,
 })
-export class DateFormControlComponent implements ControlValueAccessor, Validator, OnDestroy {
+export class DateFormControlComponent implements ControlValueAccessor, Validator, OnDestroy, OnInit {
   disabled = false;
-  @ViewChild("icon", { static: true }) iconElement: ElementRef;
-  @Input() minDate: Date;
-  @Input() maxDate: Date;
-  @Input() placeHolder:string = "mm/dd/yyyy"
+  calendarPicker: flatpickr.Instance;
+  dateFormat: string = "m/d/Y";
   internalFormControl: FormControl;
   externalFormControl: FormControl;
   Unsubscribe: Subject<null>;
+  @ViewChild("icon", { static: true }) iconElement: ElementRef;
+  @Input() minDate: Date;
+  @Input() maxDate: Date;
+  @Input() placeHolder: string = "mm/dd/yyyy"
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -38,10 +40,8 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
     this.Unsubscribe = new Subject();
     this.internalFormControl = this.fb.control(null);
     this.externalFormControl = this.fb.control(null);
-    merge(
-      this.internalFormControl.valueChanges,
-      this.internalFormControl.statusChanges
-    ).pipe(
+    this.internalFormControl.valueChanges.pipe(
+      debounceTime(500),
       tap(x => {
         const val = this.internalFormControl.value;
         const newDate = val ? new Date(val) : new Date(null);
@@ -53,6 +53,9 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       tap(x => { this.onChange(x) }),
       takeUntil(this.Unsubscribe)
     ).subscribe()
+  }
+  ngOnInit(): void {
+    this.calendarPicker = flatpickr(this.iconElement.nativeElement, this.getFlatPickrOptions()) as flatpickr.Instance;
   }
   writeValue(obj: any): void {
     this.internalFormControl.setValue(obj);
@@ -79,6 +82,15 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
     this.Unsubscribe.complete();
   }
   openCalendar(): void {
+    this.calendarPicker.config.minDate = this.minDate;
+    this.calendarPicker.config.maxDate = this.maxDate;
+    this.calendarPicker.setDate(new Date(this.externalFormControl.value))
+    setTimeout(() => {
+      this.calendarPicker.open();
+    }, 100);
+  }
+
+  getFlatPickrOptions() {
     const options: any = {
       // altFormat: this.altFormat,
       // altInput: this.altInput,
@@ -87,7 +99,7 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       // appendTo: this.appendTo,
       // ariaDateFormat: this.ariaDateFormat,
       // clickOpens: this.clickOpens,
-      // dateFormat: this.dateFormat,
+      dateFormat: this.dateFormat,
       // defaultHour: this.defaultHour,
       // defaultMinute: this.defaultMinute,
       // defaultSeconds: this.defaultSeconds,
@@ -98,10 +110,10 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       // enableSeconds: this.enableSeconds,
       // formatDate: this.formatDate,
       // hourIncrement: this.hourIncrement,
-      // defaultDate: this.initialValue,
+      // defaultDate: new Date(this.externalFormControl.value),
       // inline: this.inline,
-      maxDate: this.maxDate,
-      minDate: this.minDate,
+      // maxDate: this.maxDate,
+      // minDate: this.minDate,
       // minuteIncrement: this.minuteIncrement,
       // mode: this.mode,
       // nextArrow: this.nextArrow,
@@ -120,8 +132,6 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       // plugins: this.plugins,
       // locale: this.locale,
       onChange: (selectedDates: Date[], dateString: string, instance: any) => {
-        // this.flatpickrChange.emit({ selectedDates, dateString, instance });
-        //this.DateSelectedEvent(selectedDates,dateString,instance);
         this.internalFormControl.setValue(dateString);
       },
       // onOpen: (selectedDates: Date[], dateString: string, instance: any) => {
@@ -168,8 +178,6 @@ export class DateFormControlComponent implements ControlValueAccessor, Validator
       //   });
       // }
     };
-    const instance = flatpickr(this.iconElement.nativeElement, options) as flatpickr.Instance;
-    instance.open();
-    // instance.config.onChange.push(this.DateSelectedEvent.bind(this))
+    return options;
   }
 }

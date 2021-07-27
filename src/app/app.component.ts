@@ -10,14 +10,15 @@ export class AppComponent {
   title = 'app';
   someText: string = "Hello World";
   someText2: string = "Hello World 2";
-  selectedDate: Date = new Date("01/01/02");
+  selectedDate: Date = new Date("01/03/2020");
   maxDate: Date = new Date('02/03/2022');
   minDate: Date = new Date('03/03/2020');
   form: FormGroup;
   constructor(private fb: FormBuilder) {
     this.form = fb.group({
-      DateRequired: fb.control({ value: '01/02/03', disabled: false }, [Validators.required]),
+      DateRequired: fb.control({ value: '02/04/2020', disabled: false }, [Validators.required]),
       DateNR: fb.control(this.selectedDate),
+      DateEnd: fb.control('03/05/2020'),
       TF: fb.control('text', Validators.required)
     })
   }
@@ -33,5 +34,11 @@ export class AppComponent {
       }
     });
     return errs;
+  }
+  get DateNRValue() {
+    return this.form.get('DateNR').value;
+  }
+  get DateEnd() {
+    return this.form.get('DateEnd').value;
   }
 }

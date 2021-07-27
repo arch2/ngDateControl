@@ -18,9 +18,12 @@
     </label>
     <label>
       Date Not Required:
-      <input type="text" formControlName="DateNR">
+      <!-- <input type="text" formControlName="DateNR"> -->
+      <app-date-form-control formControlName="DateNR"></app-date-form-control>
     </label>
-    <app-date-form-control formControlName="DateRequired" placeHolder="hello world" [minDate]="minDate" [maxDate]="maxDate"></app-date-form-control>
+    <app-date-form-control formControlName="DateRequired" placeHolder="hello world" [minDate]="DateNRValue" [maxDate]="DateEnd"></app-date-form-control>
+    <app-date-form-control formControlName="DateEnd" placeHolder="date end?"></app-date-form-control>
+    
   </form>
   <form #demo="ngForm">
     <h1>Two way binding form</h1>
